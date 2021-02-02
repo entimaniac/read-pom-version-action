@@ -1,21 +1,34 @@
-# Hello world javascript action
+# Read Pom Version
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This action reads the `pom.xml` from the root of your project and extracts the project version.
+The `pom.xml` is expected to look like:
 
-## Inputs
+```xml
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <groupId>com.example</groupId>
+    <artifactId>wow</artifactId>
+    <version>2.0.0</version>
+    ...
+```
 
-### `who-to-greet`
+We can see that the version of this project is `2.0.0`
 
-**Required** The name of the person to greet. Default `"World"`.
 
 ## Outputs
 
-### `time`
+### `version`
 
-The time we greeted you.
+The version of the project.
+
+`${{ steps.yourStepIdGoesHere.outputs.version }}`
 
 ## Example usage
 
-uses: actions/hello-world-javascript-action@v1.1
-with:
-  who-to-greet: 'Mona the Octocat'
+```yaml
+- name: Get Version
+        uses: ./
+        id: getVersion
+- name: Print the version
+        run: echo "The version we just got is ${{ steps.getVersion.outputs.version }}"
+```
