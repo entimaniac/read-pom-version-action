@@ -1,15 +1,20 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+const core = require("@actions/core");
+const pomParser = require("pom-parser");
 
 try {
-    // `who-to-greet` input defined in action metadata file
-    const nameToGreet = core.getInput('who-to-greet');
-    console.log(`Hello ${nameToGreet}!`);
-    const time = (new Date()).toTimeString();
-    core.setOutput("time", time);
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
+  let opts = {
+    filePath: __dirname + "/pom.xml", // The path to a pom file
+  };
+  pomParser.parse(opts, function(err, pomResponse) {
+    if (err) {
+      console.log("ERROR: " + err);
+      process.exit(1);
+    }
+    console.log(pomResponse.pomObject.project.version)
+  });
+
 } catch (error) {
-    core.setFailed(error.message);
+  console.error(error);
+
+  core.setFailed(error.message);
 }
