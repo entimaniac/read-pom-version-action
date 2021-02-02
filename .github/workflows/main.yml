@@ -1,0 +1,14 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: Retrieve version
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get Version
+        uses: ./
+        id: getVersion
+      - name: Print the version
+        run: echo "The version we just got is ${{ steps.getVersion.outputs.version }}"
