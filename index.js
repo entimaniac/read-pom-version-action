@@ -3,18 +3,22 @@ const pomParser = require("pom-parser");
 
 try {
   let opts = {
-    filePath: __dirname + "/pom.xml", // The path to a pom file
+    filePath: __dirname + "/pom.xml",
   };
-  pomParser.parse(opts, function(err, pomResponse) {
-    if (err) {
-      console.log("ERROR: " + err);
+  pomParser.parse(opts, function(error, pomResponse) {
+    console.log("Reading pom.xml from project root")
+
+    if (error) {
+      console.log("an error occurred")
+      core.setFailed(error.message);
       process.exit(1);
     }
-    console.log(pomResponse.pomObject.project.version)
+
+    console.log("Successfully parsed pom.xml ")
+    core.setOutput("version", pomResponse.pomObject.project.version);
+    console.log("project version is: ", pomResponse.pomObject.project.version)
   });
 
 } catch (error) {
-  console.error(error);
-
   core.setFailed(error.message);
 }
