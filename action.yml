@@ -4,8 +4,8 @@ outputs:
   version:
     description: 'The version of the project'
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'index.js'
 branding:
-  icon: 'at-sign'  
+  icon: 'at-sign'
   color: 'blue'
