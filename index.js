@@ -16,7 +16,8 @@ try {
 
     console.log("Successfully parsed pom.xml ");
     core.setOutput("version", pomResponse.pomObject.project.version);
-    console.log("project version is: ", pomResponse.pomObject.project.version);
+
+    console.log("Project version is: ", pomResponse.pomObject.project.version);
   });
 } catch (error) {
   core.setFailed(error.message);
